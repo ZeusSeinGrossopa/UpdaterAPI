@@ -15,7 +15,7 @@ How it works:
 # Work with the API
 
 Here we use the [UpdaterAPI](https://github.com/ZeusSeinGrossopa/UpdaterAPI/blob/master/src/test/java/UpdaterAPI.java) class.
-The UpdaterAPI uses the Gson & the Apache-Commons-IO library 
+The UpdaterAPI uses the [Gson](https://github.com/google/gson) & the [Apache-Commons-IO](https://github.com/apache/commons-io) library's
 
 ### Download the UpdaterAPI 
 

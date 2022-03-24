@@ -37,27 +37,25 @@ public class UpdaterAPI {
     }
 
     private static void getLatestVersion(Consumer<String> consumer) {
-        new Thread(() -> {
-            try {
-                HttpURLConnection connect = (HttpURLConnection) new URL(API).openConnection();
+        try {
+            HttpURLConnection connect = (HttpURLConnection) new URL(API).openConnection();
 
-                connect.setConnectTimeout(10000);
-                connect.connect();
+            connect.setConnectTimeout(10000);
+            connect.connect();
 
-                InputStream in = connect.getInputStream();
-                BufferedReader reader = new BufferedReader(new InputStreamReader(in, StandardCharsets.UTF_8));
+            InputStream in = connect.getInputStream();
+            BufferedReader reader = new BufferedReader(new InputStreamReader(in, StandardCharsets.UTF_8));
 
-                if (connect.getResponseCode() == 200) {
-                    JsonObject object = JsonParser.parseReader(reader).getAsJsonObject();
+            if (connect.getResponseCode() == 200) {
+                JsonObject object = JsonParser.parseReader(reader).getAsJsonObject();
 
-                    consumer.accept(object.entrySet().stream().filter(e -> e.getKey().equals("assets")).map(Map.Entry::getValue).findFirst().orElseThrow(() -> new RuntimeException("Can not update system"))
-                            .getAsJsonArray()
-                            .get(0).getAsJsonObject().get("browser_download_url").getAsString());
-                }
-            } catch (Exception e) {
-                e.printStackTrace();
+                consumer.accept(object.entrySet().stream().filter(e -> e.getKey().equals("assets")).map(Map.Entry::getValue).findFirst().orElseThrow(() -> new RuntimeException("Can not update system"))
+                        .getAsJsonArray()
+                        .get(0).getAsJsonObject().get("browser_download_url").getAsString());
             }
-        }).start();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     public static void update(String url, File newFile) throws IOException {

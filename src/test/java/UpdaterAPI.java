@@ -67,14 +67,25 @@ public class UpdaterAPI {
         update(updaterFile, url, newFile);
     }
 
-    public static void update(File updaterFile, String url, File newFile) throws IOException {
-        update(updaterFile, getJarPath(), url, newFile);
+    public static void update(String url, File newFile, boolean restart) throws IOException {
+        if(updaterFile == null)
+            throw new NullPointerException("The downloadUpdater must be called before using this method. Alternate use the #update(updaterFile, url, newFile) method.");
+
+        update(updaterFile, url, newFile, restart);
     }
 
-    public static void update(File updaterFile, File oldFile, String url, File newFile) throws IOException {
+    public static void update(File updaterFile, String url, File newFile) throws IOException {
+        update(updaterFile, getJarPath(), url, newFile, false);
+    }
+
+    public static void update(File updaterFile, String url, File newFile, boolean restart) throws IOException {
+        update(updaterFile, getJarPath(), url, newFile, restart);
+    }
+
+    public static void update(File updaterFile, File oldFile, String url, File newFile, boolean restart) throws IOException {
         String javaBin = System.getProperty("java.home") + File.separator + "bin" + File.separator + "java";
 
-        ProcessBuilder builder = new ProcessBuilder(javaBin, "-jar", updaterFile.getAbsolutePath(), url, oldFile.getAbsolutePath(), newFile.getAbsolutePath());
+        ProcessBuilder builder = new ProcessBuilder(javaBin, "-jar", updaterFile.getAbsolutePath(), url, oldFile.getAbsolutePath(), newFile.getAbsolutePath(), restart ? "true" : "");
 
         builder.start();
     }

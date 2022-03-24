@@ -16,7 +16,7 @@ How it works:
 
 Here we use the UpdaterAPI class.
 
-###Download the UpdaterAPI 
+### Download the UpdaterAPI 
 
 ```
 public void start() {
@@ -25,7 +25,7 @@ public void start() {
 
 ```
 
-###Update with the UpdaterAPI 
+### Update with the UpdaterAPI 
 ```
     public static void update() {
         File newFile = new File("./YourProgram.jar");

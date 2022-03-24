@@ -28,16 +28,16 @@ public void start() {
 
 ### Update with the UpdaterAPI 
 ```
-    public static void update() {
-        File newFile = new File("./YourProgram.jar");
-        String url = "www.yoururl.com/api/yourprogram/v1.0/YourProgram.jar";
+public void update() {
+    File newFile = new File("./YourProgram.jar");
+    String url = "www.yoururl.com/api/yourprogram/v1.0/YourProgram.jar";
 
-        try {
-            UpdaterAPI.update(url, newFile);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+    try {
+        UpdaterAPI.update(url, newFile);
+    } catch (IOException e) {
+        e.printStackTrace();
     }
+}
 ```
 
 # Run parameter 

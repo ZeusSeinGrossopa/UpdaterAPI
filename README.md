@@ -45,7 +45,7 @@ public void update() {
 1. URL. This parameter is the url from where the Updater downloads the latest file of your program. (for example: www.yoururl.com/api/yourprogram/v1.0/YourProgram.jar)
 2. Your file of the program what you want to replace (Must be a absoult path)
 3. The new Path location of your program what you want to replace (Must be a absoult path)
-
+4. (Optional) With the 4. parameter you can restart the jar file
 
 
 ---

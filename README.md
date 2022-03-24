@@ -14,7 +14,7 @@ How it works:
 
 # Work with the API
 
-Here we use the UpdaterAPI class.
+Here we use the [UpdaterAPI](https://github.com/ZeusSeinGrossopa/UpdaterAPI/blob/master/src/test/java/UpdaterAPI.java) class.
 
 ### Download the UpdaterAPI 
 

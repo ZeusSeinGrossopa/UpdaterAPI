@@ -16,20 +16,37 @@ public class UpdaterAPI {
     private static final String API = "https://api.github.com/repos/ZeusSeinGrossopa/UpdaterAPI/releases/latest";
 
     private static File updaterFile = null;
+    private static boolean autoDelete = false;
 
     private static File jarPath;
 
     public static void downloadUpdater(File destination) {
+        downloadUpdater(destination, null);
+    }
+
+    public static void downloadUpdater(File destination, Consumer<File> consumer) {
         destination = new File((destination.isDirectory() ? destination : new File(FilenameUtils.getPath(destination.getAbsolutePath()))) + "/Updater.jar");
 
         final File finalDestination = destination;
         updaterFile = finalDestination;
+
+        if (autoDelete) {
+            if(destination.exists())
+                destination.delete();
+
+            if(consumer != null)
+                consumer.accept(destination);
+            return;
+        }
 
         getLatestVersion(urlCallback -> {
             try {
                 URL url = new URL(urlCallback);
 
                 FileUtils.copyURLToFile(url, finalDestination);
+
+                if(consumer != null)
+                    consumer.accept(finalDestination);
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -85,7 +102,20 @@ public class UpdaterAPI {
 
         ProcessBuilder builder = new ProcessBuilder(javaBin, "-jar", updaterFile.getAbsolutePath(), url, oldFile.getAbsolutePath(), newFile.getAbsolutePath(), restart ? "true" : "");
 
-        builder.start();
+        if (autoDelete) {
+            autoDelete = false;
+            downloadUpdater(oldFile.getParentFile(), file -> {
+                try {
+                    builder.start();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            });
+
+            autoDelete = true;
+        } else {
+            builder.start();
+        }
     }
 
     public static boolean needUpdate(String version1, String version2) {
@@ -118,5 +148,13 @@ public class UpdaterAPI {
         }
 
         return jarPath;
+    }
+
+    public static void setAutoDelete(boolean value) {
+        autoDelete = value;
+    }
+
+    public static File getCurrentUpdater() {
+        return updaterFile;
     }
 }

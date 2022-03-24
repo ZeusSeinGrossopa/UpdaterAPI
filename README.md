@@ -40,6 +40,10 @@ public void update() {
 }
 ```
 
+### Other uses 
+
+- Use `UpdaterAPI.setAutoDelete(true)` that the Updater is only show up in the directory, when the program needs to update
+
 # Run parameter 
 
 1. URL. This parameter is the url from where the Updater downloads the latest file of your program. (for example: www.yoururl.com/api/yourprogram/v1.0/YourProgram.jar)

@@ -8,6 +8,12 @@ import java.net.URL;
 public class Updater {
 
     public static void main(String[] args) {
+        try {
+            Thread.sleep(2000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
         if(args.length < 3) {
             System.out.println("Updater must be run with three arguments!");
             return;

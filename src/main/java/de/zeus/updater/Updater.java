@@ -8,7 +8,7 @@ import java.net.URL;
 public class Updater {
 
     public static void main(String[] args) {
-        if(args.length != 3) {
+        if(args.length < 3) {
             System.out.println("Updater must be run with three arguments!");
             return;
         }
@@ -16,6 +16,11 @@ public class Updater {
         String url = args[0];
         String oldName = args[1];
         String newName = args[2];
+
+        boolean restart = false;
+        if(args.length == 4) {
+            restart = Boolean.parseBoolean(args[3]);
+        }
 
         if(url == null || url.isEmpty()) {
             System.out.println("URL empty!");
@@ -42,6 +47,17 @@ public class Updater {
             oldFile.delete();
 
         downloadFile(url, newFile);
+
+        if(restart) {
+            String javaBin = System.getProperty("java.home") + File.separator + "bin" + File.separator + "java";
+            ProcessBuilder builder = new ProcessBuilder(javaBin, "-jar", newFile.getAbsolutePath());
+
+            try {
+                builder.start();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
 
         System.exit(0);
     }

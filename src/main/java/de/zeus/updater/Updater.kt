@@ -1,79 +1,82 @@
-package de.zeus.updater;
+package de.zeus.updater
 
-import org.apache.commons.io.FileUtils;
+import java.io.File
+import kotlin.jvm.JvmOverloads
+import org.apache.commons.io.FilenameUtils
+import org.apache.commons.io.FileUtils
+import java.io.IOException
+import java.io.BufferedReader
+import com.google.gson.JsonObject
+import com.google.gson.JsonParser
+import com.google.gson.JsonElement
+import java.lang.RuntimeException
+import java.util.function.Supplier
+import kotlin.Throws
+import java.lang.NullPointerException
+import java.lang.ProcessBuilder
+import java.net.URISyntaxException
+import kotlin.jvm.JvmStatic
+import java.lang.InterruptedException
+import de.zeus.updater.Updater
+import java.lang.Boolean
+import java.net.URL
+import kotlin.system.exitProcess
 
-import java.io.File;
-import java.io.IOException;
-import java.net.URL;
-
-public class Updater {
-
-    public static void main(String[] args) {
+object Updater {
+    @JvmStatic
+    fun main(args: Array<String>) {
         try {
-            Thread.sleep(2000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
+            Thread.sleep(2000)
+        } catch (e: InterruptedException) {
+            e.printStackTrace()
         }
-
-        if (args.length < 3) {
-            System.out.println("Updater must be run with three arguments!");
-            return;
+        if (args.size < 3) {
+            println("Updater must be run with three arguments!")
+            return
         }
-
-        String url = args[0];
-        String oldName = args[1];
-        String newName = args[2];
-
-        boolean restart = false;
-        if (args.length == 4) {
-            restart = Boolean.parseBoolean(args[3]);
+        val url = args[0]
+        val oldName = args[1]
+        val newName = args[2]
+        var restart = false
+        if (args.size == 4) {
+            restart = Boolean.parseBoolean(args[3])
         }
-
-        if (url == null || url.isEmpty()) {
-            System.out.println("URL empty!");
-            return;
+        if (url.isEmpty()) {
+            println("URL empty!")
+            return
         }
-
-        if (oldName == null || oldName.isEmpty()) {
-            System.out.println("OldName empty!");
-            return;
+        if (oldName.isEmpty()) {
+            println("OldName empty!")
+            return
         }
-
-        if (newName == null || newName.isEmpty()) {
-            System.out.println("NewName empty!");
-            return;
+        if (newName.isEmpty()) {
+            println("NewName empty!")
+            return
         }
 
 //        File oldFile = new File("./" + oldName);
 //        File newFile = new File("./" + newName);
-
-        File oldFile = new File(oldName);
-        File newFile = new File(newName);
-
-        if (oldFile.exists())
-            oldFile.delete();
-
-        downloadFile(url, newFile);
-
+        val oldFile = File(oldName)
+        val newFile = File(newName)
+        if (oldFile.exists()) oldFile.delete()
+        downloadFile(url, newFile)
         if (restart) {
-            String javaBin = System.getProperty("java.home") + File.separator + "bin" + File.separator + "java";
-            ProcessBuilder builder = new ProcessBuilder(javaBin, "-jar", newFile.getAbsolutePath());
-
+            val javaBin = System.getProperty("java.home") + File.separator + "bin" + File.separator + "java"
+            val builder = ProcessBuilder(javaBin, "-jar", newFile.absolutePath)
             try {
-                builder.start();
-            } catch (IOException e) {
-                e.printStackTrace();
+                builder.start()
+            } catch (e: IOException) {
+                e.printStackTrace()
             }
         }
-
-        System.exit(0);
+        exitProcess(0)
     }
 
-    private static void downloadFile(String url, File destination) {
+    private fun downloadFile(url: String?, destination: File?) {
         try {
-            FileUtils.copyURLToFile(new URL(url), destination);
-        } catch (IOException e) {
-            e.printStackTrace();
+            FileUtils.copyURLToFile(URL(url), destination)
+        } catch (e: IOException) {
+            e.printStackTrace()
         }
     }
 }

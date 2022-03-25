@@ -5,8 +5,8 @@ Its downloading files from a url and replacing it.
 ---
 How it works: 
 
-1. Your program downloads the Updater (See [here](#Download the UpdaterAPI))
-2. Your program running the jar before its closing (See [here](#Update with the UpdaterAPI))
+1. Your program downloads the Updater (See [here](#download-the-updaterapi))
+2. Your program running the jar before its closing (See [here](#update-with-the-updaterapi))
 3. The Updater downloading the newest Jar from your Website
 4. The Updater replaces the new Jar with the old
 5. And done!

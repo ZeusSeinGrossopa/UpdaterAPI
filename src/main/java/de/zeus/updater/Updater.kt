@@ -1,72 +1,79 @@
-package de.zeus.updater
+package de.zeus.updater;
 
-import kotlin.jvm.JvmStatic
-import java.lang.InterruptedException
-import java.io.File
-import java.lang.ProcessBuilder
-import java.io.IOException
-import org.apache.commons.io.FileUtils
-import java.net.URL
-import kotlin.system.exitProcess
+import org.apache.commons.io.FileUtils;
 
-object Updater {
+import java.io.File;
+import java.io.IOException;
+import java.net.URL;
 
-    @JvmStatic
-    fun main(args: Array<String>) {
+public class Updater {
+
+    public static void main(String[] args) {
         try {
-            Thread.sleep(2000)
-        } catch (e: InterruptedException) {
-            e.printStackTrace()
+            Thread.sleep(2000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
         }
-        if (args.size < 3) {
-            println("Updater must be run with three arguments!")
-            return
+
+        if (args.length < 3) {
+            System.out.println("Updater must be run with three arguments!");
+            return;
         }
-        val url = args[0]
-        val oldName = args[1]
-        val newName = args[2]
-        var restart = false
-        if (args.size == 4) {
-            restart = args[3].equals("true", true)
+
+        String url = args[0];
+        String oldName = args[1];
+        String newName = args[2];
+
+        boolean restart = false;
+        if (args.length == 4) {
+            restart = Boolean.parseBoolean(args[3]);
         }
-        if (url.isEmpty()) {
-            println("URL empty!")
-            return
+
+        if (url == null || url.isEmpty()) {
+            System.out.println("URL empty!");
+            return;
         }
-        if (oldName.isEmpty()) {
-            println("OldName empty!")
-            return
+
+        if (oldName == null || oldName.isEmpty()) {
+            System.out.println("OldName empty!");
+            return;
         }
-        if (newName.isEmpty()) {
-            println("NewName empty!")
-            return
+
+        if (newName == null || newName.isEmpty()) {
+            System.out.println("NewName empty!");
+            return;
         }
 
 //        File oldFile = new File("./" + oldName);
 //        File newFile = new File("./" + newName);
-        val oldFile = File(oldName)
-        val newFile = File(newName)
 
-        if (oldFile.exists()) oldFile.delete()
+        File oldFile = new File(oldName);
+        File newFile = new File(newName);
 
-        downloadFile(url, newFile)
+        if (oldFile.exists())
+            oldFile.delete();
+
+        downloadFile(url, newFile);
+
         if (restart) {
-            val javaBin = System.getProperty("java.home") + File.separator + "bin" + File.separator + "java"
-            val builder = ProcessBuilder(javaBin, "-jar", newFile.absolutePath)
+            String javaBin = System.getProperty("java.home") + File.separator + "bin" + File.separator + "java";
+            ProcessBuilder builder = new ProcessBuilder(javaBin, "-jar", newFile.getAbsolutePath());
+
             try {
-                builder.start()
-            } catch (e: IOException) {
-                e.printStackTrace()
+                builder.start();
+            } catch (IOException e) {
+                e.printStackTrace();
             }
         }
-        exitProcess(0)
+
+        System.exit(0);
     }
 
-    private fun downloadFile(url: String, destination: File) {
+    private static void downloadFile(String url, File destination) {
         try {
-            FileUtils.copyURLToFile(URL(url), destination)
-        } catch (e: IOException) {
-            e.printStackTrace()
+            FileUtils.copyURLToFile(new URL(url), destination);
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 }

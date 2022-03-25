@@ -14,6 +14,7 @@ import java.util.function.Consumer;
 public class UpdaterAPI {
 
     private static final String API = "https://api.github.com/repos/ZeusSeinGrossopa/UpdaterAPI/releases/latest";
+    private static final String GITHUB_CUSTOM_URL = "https://api.github.com/repos/%s/releases/latest";
 
     private static File updaterFile = null;
     private static boolean autoDelete = false;
@@ -38,10 +39,10 @@ public class UpdaterAPI {
                 consumer.accept(destination);
             return;
         }
-
-        getLatestVersion(urlCallback -> {
+        
+        getLatestReleaseFromGithub("ZeusSeinGrossopa", "UpdaterAPI", callback -> {
             try {
-                URL url = new URL(urlCallback);
+                URL url = new URL(callback[0]);
 
                 FileUtils.copyURLToFile(url, finalDestination);
 
@@ -53,9 +54,9 @@ public class UpdaterAPI {
         });
     }
 
-    private static void getLatestVersion(Consumer<String> consumer) {
+    public static void getLatestReleaseFromGithub(String githubUser, String repository, Consumer<String[]> consumer) {
         try {
-            HttpURLConnection connect = (HttpURLConnection) new URL(API).openConnection();
+            HttpURLConnection connect = (HttpURLConnection) new URL(String.format(GITHUB_CUSTOM_URL, githubUser + "/" + repository)).openConnection();
 
             connect.setConnectTimeout(10000);
             connect.connect();
@@ -66,9 +67,12 @@ public class UpdaterAPI {
             if (connect.getResponseCode() == 200) {
                 JsonObject object = JsonParser.parseReader(reader).getAsJsonObject();
 
-                consumer.accept(object.entrySet().stream().filter(e -> e.getKey().equals("assets")).map(Map.Entry::getValue).findFirst().orElseThrow(() -> new RuntimeException("Can not update system"))
+                String downloadLink = object.entrySet().stream().filter(e -> e.getKey().equals("assets"))
+                        .map(Map.Entry::getValue).findFirst().orElseThrow(() -> new RuntimeException("Can not update system"))
                         .getAsJsonArray()
-                        .get(0).getAsJsonObject().get("browser_download_url").getAsString());
+                        .get(0).getAsJsonObject().get("browser_download_url").getAsString();
+                
+                consumer.accept(new String[] {object.get("tag_name").getAsString(), downloadLink});
             }
         } catch (Exception e) {
             e.printStackTrace();

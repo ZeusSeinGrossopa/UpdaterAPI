@@ -2,7 +2,8 @@ package de.zeus.updater;
 
 import org.apache.commons.io.FileUtils;
 
-import java.io.*;
+import java.io.File;
+import java.io.IOException;
 import java.net.URL;
 
 public class Updater {
@@ -14,7 +15,7 @@ public class Updater {
             e.printStackTrace();
         }
 
-        if(args.length < 3) {
+        if (args.length < 3) {
             System.out.println("Updater must be run with three arguments!");
             return;
         }
@@ -24,21 +25,21 @@ public class Updater {
         String newName = args[2];
 
         boolean restart = false;
-        if(args.length == 4) {
+        if (args.length == 4) {
             restart = Boolean.parseBoolean(args[3]);
         }
 
-        if(url == null || url.isEmpty()) {
+        if (url == null || url.isEmpty()) {
             System.out.println("URL empty!");
             return;
         }
 
-        if(oldName == null || oldName.isEmpty()) {
+        if (oldName == null || oldName.isEmpty()) {
             System.out.println("OldName empty!");
             return;
         }
 
-        if(newName == null || newName.isEmpty()) {
+        if (newName == null || newName.isEmpty()) {
             System.out.println("NewName empty!");
             return;
         }
@@ -49,12 +50,12 @@ public class Updater {
         File oldFile = new File(oldName);
         File newFile = new File(newName);
 
-        if(oldFile.exists())
+        if (oldFile.exists())
             oldFile.delete();
 
         downloadFile(url, newFile);
 
-        if(restart) {
+        if (restart) {
             String javaBin = System.getProperty("java.home") + File.separator + "bin" + File.separator + "java";
             ProcessBuilder builder = new ProcessBuilder(javaBin, "-jar", newFile.getAbsolutePath());
 

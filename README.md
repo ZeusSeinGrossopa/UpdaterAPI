@@ -1,9 +1,8 @@
 # UpdaterAPI
 
-UpdaterAPI is a useful API for creating a simple Auto-Updater. 
-Its downloading files from a url and replacing it. 
+UpdaterAPI is a useful API for creating a simple Auto-Updater. Its downloading files from a url and replacing it.
 ---
-How it works: 
+How it works:
 
 1. Your program downloads the Updater (See [here](#download-the-updaterapi))
 2. Your program running the jar before its closing (See [here](#update-with-the-updaterapi))
@@ -11,13 +10,13 @@ How it works:
 4. The Updater replaces the new Jar with the old
 5. And done!
 
-
 # Work with the API
 
-Here we use the [UpdaterAPI](https://github.com/ZeusSeinGrossopa/UpdaterAPI/blob/master/src/test/java/UpdaterAPI.java) class.
-The UpdaterAPI uses the [Gson](https://github.com/google/gson) & the [Apache-Commons-IO](https://github.com/apache/commons-io) library's
+Here we use the [UpdaterAPI](https://github.com/ZeusSeinGrossopa/UpdaterAPI/blob/master/src/test/java/UpdaterAPI.java)
+class. The UpdaterAPI uses the [Gson](https://github.com/google/gson) &
+the [Apache-Commons-IO](https://github.com/apache/commons-io) library's
 
-### Download the UpdaterAPI 
+### Download the UpdaterAPI
 
 ```
 public void start() {
@@ -26,7 +25,8 @@ public void start() {
 
 ```
 
-### Update with the UpdaterAPI 
+### Update with the UpdaterAPI
+
 ```
 public void update() {
     File newFile = new File("./YourProgram.jar");
@@ -40,17 +40,18 @@ public void update() {
 }
 ```
 
-### Other uses 
+### Other uses
 
-- Use `UpdaterAPI.setAutoDelete(true)` that the Updater is only show up in the directory, when the program needs to update
+- Use `UpdaterAPI.setAutoDelete(true)` that the Updater is only show up in the directory, when the program needs to
+  update
 
 # Run parameters
 
-1. This parameter is the url from where the Updater downloads the latest file of your program. (for example: www.yoururl.com/api/yourprogram/v1.0/YourProgram.jar)
+1. This parameter is the url from where the Updater downloads the latest file of your program. (for
+   example: www.yoururl.com/api/yourprogram/v1.0/YourProgram.jar)
 2. Your file of the program what you want to replace (Must be a absoult path)
 3. The new Path location of your program what you want to replace (Must be a absoult path)
 4. (Optional) With the 4. parameter you can restart the jar file
-
 
 ---
 

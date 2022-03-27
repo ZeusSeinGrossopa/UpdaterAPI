@@ -59,6 +59,12 @@ public class UpdaterAPI {
             HttpURLConnection connect = (HttpURLConnection) new URL(String.format(GITHUB_CUSTOM_URL, githubUser + "/" + repository)).openConnection();
 
             connect.setConnectTimeout(10000);
+
+            connect.setRequestProperty("Accept", "application/vnd.github.v3+json");
+            connect.setRequestProperty("Content-Type", "application/json");
+
+            connect.setRequestProperty("User-Agent", githubUser + "/" + repository + " (" + System.getProperty("os.name") + "; " + System.getProperty("os.arch") + ")");
+
             connect.connect();
 
             InputStream in = connect.getInputStream();

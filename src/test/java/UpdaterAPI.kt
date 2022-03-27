@@ -1,29 +1,16 @@
-import java.io.File
-import kotlin.jvm.JvmOverloads
-import org.apache.commons.io.FilenameUtils
-import org.apache.commons.io.FileUtils
-import java.io.IOException
-import java.io.BufferedReader
-import com.google.gson.JsonObject
-import com.google.gson.JsonParser
 import com.google.gson.JsonElement
-import java.lang.RuntimeException
-import java.util.function.Supplier
-import kotlin.Throws
-import java.lang.NullPointerException
-import java.lang.ProcessBuilder
-import java.net.URISyntaxException
-import kotlin.jvm.JvmStatic
-import java.lang.InterruptedException
-import de.zeus.updater.Updater
+import com.google.gson.JsonParser
+import org.apache.commons.io.FileUtils
+import org.apache.commons.io.FilenameUtils
+import java.io.BufferedReader
+import java.io.File
+import java.io.IOException
 import java.io.InputStreamReader
-import java.lang.Exception
 import java.net.HttpURLConnection
+import java.net.URISyntaxException
 import java.net.URL
 import java.nio.charset.StandardCharsets
-import java.util.Map
 import java.util.function.Consumer
-import java.util.function.Function
 
 object UpdaterAPI {
 
@@ -60,7 +47,14 @@ object UpdaterAPI {
         try {
             val connect = URL(GITHUB_CUSTOM_URL?.let { String.format(it, "$githubUser/$repository") }).openConnection() as HttpURLConnection
             connect.connectTimeout = 10000
+
+            connect.setRequestProperty("Accept", "application/vnd.github.v3+json")
+            connect.setRequestProperty("Content-Type", "application/json")
+
+            connect.setRequestProperty("User-Agent", githubUser + "/" + repository + " (" + System.getProperty("os.name") + "; " + System.getProperty("os.arch") + ")")
+
             connect.connect()
+
             val `in` = connect.inputStream
             val reader = BufferedReader(InputStreamReader(`in`, StandardCharsets.UTF_8))
             if (connect.responseCode == 200) {

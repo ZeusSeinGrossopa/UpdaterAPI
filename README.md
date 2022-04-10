@@ -40,7 +40,7 @@ public void update() {
 }
 ```
 
-### Other uses
+### Other functions
 
 - Use `UpdaterAPI.setAutoDelete(true)` that the Updater is only show up in the directory, when the program needs to
   update

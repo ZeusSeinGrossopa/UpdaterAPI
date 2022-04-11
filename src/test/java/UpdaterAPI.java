@@ -113,7 +113,7 @@ public class UpdaterAPI {
 
         if (autoDelete) {
             autoDelete = false;
-            downloadUpdater(oldFile.getParentFile(), file -> {
+            downloadUpdater(updaterFile, file -> {
                 try {
                     builder.start();
                 } catch (IOException e) {

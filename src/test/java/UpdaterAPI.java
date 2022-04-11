@@ -13,8 +13,7 @@ import java.util.function.Consumer;
 
 public class UpdaterAPI {
 
-    private static final String API = "https://api.github.com/repos/ZeusSeinGrossopa/UpdaterAPI/releases/latest";
-    private static final String GITHUB_CUSTOM_URL = "https://api.github.com/repos/%s/releases/latest";
+    public static final String GITHUB_CUSTOM_URL = "https://api.github.com/repos/%s/releases/latest";
 
     private static File updaterFile = null;
     private static boolean autoDelete = false;
@@ -26,7 +25,7 @@ public class UpdaterAPI {
     }
 
     public static void downloadUpdater(File destination, Consumer<File> consumer) {
-        destination = new File((destination.isDirectory() ? destination : new File(FilenameUtils.getPath(destination.getAbsolutePath()))) + "/Updater.jar");
+        destination = new File((destination.isDirectory() ? new File(destination.getAbsolutePath()) + "/Updater.jar" : destination.getAbsolutePath()));
 
         final File finalDestination = destination;
         updaterFile = finalDestination;
@@ -42,7 +41,7 @@ public class UpdaterAPI {
 
         getLatestReleaseFromGithub("ZeusSeinGrossopa", "UpdaterAPI", callback -> {
             try {
-                URL url = new URL(callback[0]);
+                URL url = new URL(callback[1]);
 
                 FileUtils.copyURLToFile(url, finalDestination);
 

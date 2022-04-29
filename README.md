@@ -14,8 +14,8 @@ How it works:
 # Work with the API
 
 Here we use the [UpdaterAPI](https://github.com/ZeusSeinGrossopa/UpdaterAPI/blob/master/src/test/java/UpdaterAPI.java)
-class. The UpdaterAPI uses the [Gson](https://github.com/google/gson) &
-the [Apache-Commons-IO](https://github.com/apache/commons-io) library's
+class. You need to implement this class in your Java program. The UpdaterAPI uses the [Gson](https://github.com/google/gson) &
+the [Apache-Commons-IO](https://github.com/apache/commons-io) library's. These librarys you must implement too in your program 
 
 ### Download the UpdaterAPI
 
@@ -43,8 +43,8 @@ public void update() {
 
 ### Other functions
 
-- Use `UpdaterAPI.setAutoDelete(true)` that the Updater is only show up in the directory, when the program needs to
-  update
+- Use `UpdaterAPI.setAutoDelete(true)` that the Updater is only available in the directory, when the program has a new version to
+  update. Default is that the updater is always available in the folder.
 
 # Run parameters
 

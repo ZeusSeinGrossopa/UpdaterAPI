@@ -1,14 +1,15 @@
 # UpdaterAPI
 
-UpdaterAPI is a useful API for creating a simple Auto-Updater. Its downloading files from a url and replacing it.
+UpdaterAPI is a useful Java API for creating a simple Auto-Updater. Its downloading a jar file from a custom url and replace it.
 ---
 How it works:
 
-1. Your program downloads the Updater (See [here](#download-the-updaterapi))
-2. Your program running the jar before its closing (See [here](#update-with-the-updaterapi))
-3. The Updater downloading the newest Jar from your Website
-4. The Updater replaces the new Jar with the old
-5. And done!
+1. Implement the UpdaterAPI class in your Java program (See [here](#work-with-the-api))
+2. After starting your Java program it will download the Updater (See [here](#download-the-updaterapi))
+3. Your program starts the downloaded Updater jar before its closing (See [here](#update-with-the-updaterapi))
+4. The Updater downloading the newest Jar from your Website
+5. The Updater replaces the new Jar with the old
+6. And done!
 
 # Work with the API
 

@@ -104,6 +104,8 @@ public class UpdaterAPI {
                         .get(0).getAsJsonObject().get("browser_download_url").getAsString();
 
                 consumer.accept(new String[]{object.get("tag_name").getAsString(), downloadLink});
+            } else {
+                throw new IOException("Could not connect to the GitHub API. Response code: " + connect.getResponseCode());
             }
         } catch (Exception e) {
             e.printStackTrace();

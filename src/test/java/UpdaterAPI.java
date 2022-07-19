@@ -1,7 +1,6 @@
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import org.apache.commons.io.FileUtils;
-import org.apache.commons.io.FilenameUtils;
 
 import java.io.*;
 import java.net.HttpURLConnection;
@@ -41,7 +40,7 @@ public class UpdaterAPI {
      * Downloading the updater file
      *
      * @param destination the destination folder where it should download the Updater jar file
-     * @param consumer the consumer for the callback when the updater is downloaded
+     * @param consumer    the consumer for the callback when the updater is downloaded
      */
     public static void downloadUpdater(File destination, Consumer<File> consumer) {
         destination = new File((destination.isDirectory() ? new File(destination.getAbsolutePath()) + "/Updater.jar" : destination.getAbsolutePath()));
@@ -74,11 +73,11 @@ public class UpdaterAPI {
 
     /**
      * API method for getting the latest release version and the download link of the GitHub repository
-     * @apiNote this api is not working for pre-releases
      *
      * @param githubUser the GitHub user of the repository
      * @param repository the repository name
-     * @param consumer callbacks the infos from the api website. First argument is the newest version and the second argument is the download link to the newest release
+     * @param consumer   callbacks the infos from the api website. First argument is the newest version and the second argument is the download link to the newest release
+     * @apiNote this api is not working for pre-releases
      */
     public static void getLatestReleaseFromGithub(String githubUser, String repository, Consumer<String[]> consumer) {
         try {
@@ -113,12 +112,12 @@ public class UpdaterAPI {
 
     /**
      * Updating your old java program file with the newest jar file
-     * @apiNote the method {@link #downloadUpdater(File, Consumer)} must be called before calling this method. Alternate use the {@link #update(File, String, File)} method
-     * @see #update(File, String, File)
      *
-     * @param url the url of your java program to download and replace it
+     * @param url     the url of your java program to download and replace it
      * @param newFile the new jar file of your program to replace your old jar
      * @throws IOException calls if the java -jar syntax command can not be called
+     * @apiNote the method {@link #downloadUpdater(File, Consumer)} must be called before calling this method. Alternate use the {@link #update(File, String, File)} method
+     * @see #update(File, String, File)
      */
     public static void update(String url, File newFile) throws IOException {
         if (updaterFile == null)
@@ -129,13 +128,13 @@ public class UpdaterAPI {
 
     /**
      * Updating your old java program file with the newest jar file
-     * @apiNote the method {@link #downloadUpdater(File, Consumer)} must be called before calling this method. Alternate use the {@link #update(File, String, File)} method
-     * @see #update(File, String, File, boolean)
      *
-     * @param url the url of your java program to download and replace it
+     * @param url     the url of your java program to download and replace it
      * @param newFile the new jar file of your program to replace your old jar
      * @param restart if the jar should be executed after updating
      * @throws IOException calls if the java -jar syntax command can not be called
+     * @apiNote the method {@link #downloadUpdater(File, Consumer)} must be called before calling this method. Alternate use the {@link #update(File, String, File)} method
+     * @see #update(File, String, File, boolean)
      */
     public static void update(String url, File newFile, boolean restart) throws IOException {
         if (updaterFile == null)
@@ -146,13 +145,13 @@ public class UpdaterAPI {
 
     /**
      * Updating your old java program file with the newest jar file
-     * @apiNote use the {@link #update(String, File)} method if you already downloaded the updater with the {@link #downloadUpdater(File, Consumer)} method
-     * @see #update(File, File, String, File, boolean)
      *
      * @param updaterFile the downloaded Updater file path
-     * @param url the url of your java program to download and replace it
-     * @param newFile the new jar file of your program to replace your old jar
+     * @param url         the url of your java program to download and replace it
+     * @param newFile     the new jar file of your program to replace your old jar
      * @throws IOException calls if the java -jar syntax command can not be called
+     * @apiNote use the {@link #update(String, File)} method if you already downloaded the updater with the {@link #downloadUpdater(File, Consumer)} method
+     * @see #update(File, File, String, File, boolean)
      */
     public static void update(File updaterFile, String url, File newFile) throws IOException {
         update(updaterFile, getJarPath(), url, newFile, false);
@@ -161,14 +160,14 @@ public class UpdaterAPI {
 
     /**
      * Updating your old java program file with the newest jar file
-     * @apiNote use the {@link #update(String, File)} method if you already downloaded the updater with the {@link #downloadUpdater(File, Consumer)} method
-     * @see #update(File, File, String, File, boolean)
      *
      * @param updaterFile the downloaded Updater file path
-     * @param url the url of your java program to download and replace it
-     * @param newFile the new jar file of your program to replace your old jar
-     * @param restart if the jar should be executed after updating
+     * @param url         the url of your java program to download and replace it
+     * @param newFile     the new jar file of your program to replace your old jar
+     * @param restart     if the jar should be executed after updating
      * @throws IOException calls if the java -jar syntax command can not be called
+     * @apiNote use the {@link #update(String, File)} method if you already downloaded the updater with the {@link #downloadUpdater(File, Consumer)} method
+     * @see #update(File, File, String, File, boolean)
      */
     public static void update(File updaterFile, String url, File newFile, boolean restart) throws IOException {
         update(updaterFile, getJarPath(), url, newFile, restart);
@@ -177,14 +176,14 @@ public class UpdaterAPI {
     /**
      * Updating your old java program file with the newest jar file
      * Using {@link System#getProperty(String)} method to get the java bin path
-     * @see <a href="https://github.com/ZeusSeinGrossopa/UpdaterAPI#run-parameters">here</a> for information about to execute paramets of the UpdaterAPI file
      *
      * @param updaterFile the downloaded Updater path file
-     * @param oldFile the jar file of your java program to replace it
-     * @param url the url of your java program to download and replace it
-     * @param newFile the new jar file of your program to replace your old jar
-     * @param restart if the jar should be executed after updating
+     * @param oldFile     the jar file of your java program to replace it
+     * @param url         the url of your java program to download and replace it
+     * @param newFile     the new jar file of your program to replace your old jar
+     * @param restart     if the jar should be executed after updating
      * @throws IOException calls if the java -jar syntax command can not be called
+     * @see <a href="https://github.com/ZeusSeinGrossopa/UpdaterAPI#run-parameters">here</a> for information about to execute paramets of the UpdaterAPI file
      */
     public static void update(File updaterFile, File oldFile, String url, File newFile, boolean restart) throws IOException {
         String javaBin = System.getProperty("java.home") + File.separator + "bin" + File.separator + "java";
@@ -209,11 +208,11 @@ public class UpdaterAPI {
 
     /**
      * Compares two versions
-     * @see #compareVersions(String, String)
      *
      * @param version1 the current version of your java program
      * @param version2 the newest version of your java program
      * @return if the version2 is newer than version1
+     * @see #compareVersions(String, String)
      */
     public static boolean needUpdate(String version1, String version2) {
         return compareVersions(version1, version2) == -1;
@@ -221,11 +220,11 @@ public class UpdaterAPI {
 
     /**
      * Compares two versions
-     * @see Integer#compare(int, int)
      *
      * @param version1 the current version of your java program
      * @param version2 the newest version of your java program
      * @return if the version2 is newer than version1
+     * @see Integer#compare(int, int)
      */
     public static int compareVersions(String version1, String version2) {
         String[] levels1 = version1.split("\\.");
@@ -262,8 +261,8 @@ public class UpdaterAPI {
      * Use this method that the Updater is only available in the directory, when the program has a new version to
      * update. Default is that the updater is always available in the folder.
      *
-     * @see #downloadUpdater(File, Consumer)
      * @param value the value to set
+     * @see #downloadUpdater(File, Consumer)
      */
     public static void setAutoDelete(boolean value) {
         autoDelete = value;

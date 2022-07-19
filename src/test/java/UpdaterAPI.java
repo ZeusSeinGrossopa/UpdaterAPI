@@ -108,7 +108,7 @@ public class UpdaterAPI {
                 throw new IOException("Could not connect to the GitHub API. Response code: " + connect.getResponseCode());
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            throw new RuntimeException(e);
         }
     }
 
